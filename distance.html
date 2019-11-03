@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>距离测量</title>
+    <style type="text/css">
+        html{height:100%}
+        body{height:100%}
+        #map{height:800px;width:400px}
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="container">
+        <input type="button" value="距离测量" onclick="Start()" />
+        <div id="result"></div>
+    </div>
+</body>
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=TpFuQ6BE9f2bffw6gyn9DkdxXFM6KeXI"></script>
+
+<script type="text/javascript">
+    var map = new BMap.Map("map");
+    var point = new BMap.Point(120, 29.5);
+    map.centerAndZoom(point, 8);
+    map.enableScrollWheelZoom(true);
+
+    cities=["杭州","宁波","温州","绍兴","湖州","嘉兴","金华","衢州","台州","丽水","舟山"];
+    var num = cities.length;
+
+    function Start(){
+        for(var x = 0; x < num; x++) {
+            for (var y = x+1; y < num; y++) {
+                get2CityDistance(x, y);
+            }
+        }
+    }
+
+    function get2CityDistance(i,j) {
+
+        var city1 = cities[i];
+        var city2 = cities[j];
+
+        if (city1 == city2) {
+            document.getElementById("result").innerHTML += 0 + "|";
+            return;
+        }
+        else {
+            var local = new BMap.LocalSearch(map);
+            local.setSearchCompleteCallback(function (result1) {
+                if (local.getStatus() != BMAP_STATUS_SUCCESS) {
+                    return;
+                }
+                var poi1 = result1.getPoi(0);
+                var point1 = new BMap.Point(poi1.point.lng, poi1.point.lat);
+
+                var local2 = new BMap.LocalSearch(map);
+                local2.setSearchCompleteCallback(function (result2) {
+                    if (local2.getStatus() != BMAP_STATUS_SUCCESS) {
+                        return;
+                    }
+                    var poi2 = result2.getPoi(0);
+                    var point2 = new BMap.Point(poi2.point.lng, poi2.point.lat);
+
+                    var driving = new BMap.DrivingRoute(map,{renderOptions: {map: map, autoViewport: false}});
+                    driving.setSearchCompleteCallback(function (result3) {
+                        if (driving.getStatus() != BMAP_STATUS_SUCCESS) {
+                            return;
+                        }
+                        var plan = result3.getPlan(0);
+                        var distance = plan.getDistance(false);
+                        document.getElementById("result").innerHTML += city1+city2+":"+distance + "|";
+                    });
+                    driving.search(point1, point2);
+                });
+                local2.search(city2);
+            });
+            local.search(city1);
+        }
+    }
+
+</script>
