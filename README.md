@@ -7,3 +7,11 @@
 *Main Contributor: Mei Zhitao/Zentalo*
 
 *Academic advisor:Liu Yue*
+
+distance.html-Gathering distance data from Baidu Map
+
+distance.txt-Distance data
+
+main.py-GA
+
+route.html-Show the route we know from GA
