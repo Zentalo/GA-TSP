@@ -1,8 +1,9 @@
 # GA-TSP
-ShangHai University-Selected Course-Computational Thinking-Report
 
-Source Code of Report of Group-1
+## ShangHai University-Selected Course-Computational Thinking-Report
 
-Main Contributor: Mei Zhitao/Zentalo
+**Source Code of Report of Group-1**
 
-Academic advisor:Liu Yue
+*Main Contributor: Mei Zhitao/Zentalo*
+
+*Academic advisor:Liu Yue*
