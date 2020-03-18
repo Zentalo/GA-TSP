@@ -1,6 +1,8 @@
 # GA-TSP
 
-## ShangHai University-Selected Course-Computational Thinking-Report
+## ShangHai University
+## Selected Course
+## Computational Thinking
 
 **Source Code of Report of Group-1**
 
